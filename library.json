@@ -1,0 +1,30 @@
+{
+  "books": {
+    "1": {
+      "bookId": "1",
+      "title": "mysql",
+      "author": "od",
+      "isAvailable": true
+    },
+    "2": {
+      "bookId": "2",
+      "title": "Adv java",
+      "author": "Deshpande",
+      "isAvailable": true
+    }
+  },
+  "users": {
+    "1": {
+      "userId": "Onkar deshpande",
+      "name": "1",
+      "borrowedBooks": [
+        {
+          "bookId": "1",
+          "title": "core java",
+          "author": "Onkar",
+          "isAvailable": false
+        }
+      ]
+    }
+  }
+}
