@@ -12,22 +12,32 @@ import java.util.Scanner;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class Library implements Serializable{
-	
+public class Library implements Serializable {
+
 	Map<String, Book> books = new HashMap<>();
 	Map<String, User> users = new HashMap<>();
 
-	private static final String FILE_PATH ="library.json";
-	
-		
+	private static final String FILE_PATH = "library.json";
+
 	public void addBook(String BookId, String title, String author) {
-		books.put(BookId, new Book(BookId, title, author));
-		saveDataToFile();
+		if (books.containsKey(BookId)) {
+			System.out.println("BookId is present");
+		} else {
+			books.put(BookId, new Book(BookId, title, author));
+			saveDataToFile();
+			System.out.println("Book added");
+		}
 	}
 
 	public void registerUser(String userId, String Name) {
-		users.put(userId, new User(Name, userId));
-		saveDataToFile();
+		if (users.containsKey(userId)) {
+			System.out.println("userid already exists");
+		} else {
+			users.put(userId, new User(Name, userId));
+			saveDataToFile();
+			System.out.println("user added");
+		}
+
 	}
 
 	public void borrowBook(String userId, String BookId) {
@@ -38,9 +48,9 @@ public class Library implements Serializable{
 			book.isAvailable = false;
 			user.borrowedBooks.add(book);
 			saveDataToFile();
-            System.out.println("Book borrowed successfully.");
-		}else {
-            System.out.println("Book not available or user not found.");
+			System.out.println("Book borrowed successfully.");
+		} else {
+			System.out.println("Book not available or user not found.");
 		}
 
 	}
@@ -52,10 +62,9 @@ public class Library implements Serializable{
 			book.isAvailable = true;
 			user.borrowedBooks.remove(book);
 			saveDataToFile();
-            System.out.println("Book returned successfully.");
-		}
-		else {
-            System.out.println("Invalid user or book.");
+			System.out.println("Book returned successfully.");
+		} else {
+			System.out.println("Invalid user or book.");
 		}
 
 	}
@@ -72,7 +81,7 @@ public class Library implements Serializable{
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			String json = gson.toJson(this);
 			Files.write(Paths.get(FILE_PATH), json.getBytes());
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -85,7 +94,7 @@ public class Library implements Serializable{
 		} catch (IOException e) {
 			return new Library();
 		}
-				
+
 	}
 
 	public static void main(String[] args) {
